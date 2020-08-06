@@ -602,7 +602,11 @@ class _ReorderableFlexContentState extends State<_ReorderableFlexContent>
                 // to make sure the whole toWrapWithSemantics responds to pointer events, i.e. dragging
                 child: MetaData(
                     child: toWrapWithSemantics,
-                    behavior: HitTestBehavior.opaque),
+                    behavior:
+//                    toWrap is ReorderableWidgetWithDragArea
+//                        ? HitTestBehavior.deferToChild
+//                        :
+                        HitTestBehavior.opaque),
                 //toWrapWithSemantics,//_dragging == toWrap.key ? const SizedBox() : toWrapWithSemantics,
                 childWhenDragging: IgnorePointer(
                     ignoring: true,
@@ -631,7 +635,12 @@ class _ReorderableFlexContentState extends State<_ReorderableFlexContent>
                 // to make sure the whole toWrapWithSemantics responds to pointer events, i.e. dragging
                 child: MetaData(
                     child: toWrapWithSemantics,
-                    behavior: HitTestBehavior.opaque),
+                    behavior:
+//                    toWrap is ReorderableWidgetWithDragArea
+//                        ? HitTestBehavior.deferToChild
+//                        :
+
+                        HitTestBehavior.opaque),
                 childWhenDragging: IgnorePointer(
                     ignoring: true,
                     child: Opacity(
@@ -854,14 +863,8 @@ class _ReorderableFlexContentState extends State<_ReorderableFlexContent>
 //      );
 
     if (widget.scrollController == null) {
-      return SingleChildScrollView(
-//      key: _contentKey,
-        scrollDirection: widget.scrollDirection,
-        child: (widget.buildItemsContainer ?? defaultBuildItemsContainer)(
-            context, widget.direction, wrappedChildren),
-        padding: widget.padding,
-        controller: _scrollController,
-      );
+      return (widget.buildItemsContainer ?? defaultBuildItemsContainer)(
+          context, widget.direction, wrappedChildren);
     } else {
       return (widget.buildItemsContainer ?? defaultBuildItemsContainer)(
           context, widget.direction, wrappedChildren);
